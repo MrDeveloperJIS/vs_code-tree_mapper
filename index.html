@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Mapper — VS Code Extension</title>
+
+    <!-- Favicon & site icon from icon.png -->
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a class="nav-logo" href="#">
+            <div class="logo-icon">
+                <img src="icon.png" alt="Tree Mapper icon">
+            </div>
+            tree-mapper
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#install">Install</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper/releases" class="nav-cta" target="_blank">Download</a></li>
+        </ul>
+        <div class="nav-hamburger" id="hamburger" onclick="toggleNav()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div style="max-width:1200px;margin:0 auto;">
+        <section class="hero">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    VS Code Extension
+                </div>
+                <h1>
+                    Map your<br>
+                    <span class="accent">entire workspace</span>
+                    <span class="line2">into one file.</span>
+                </h1>
+                <p class="hero-desc">
+                    Right-click any folder. Get a complete Markdown snapshot — full directory tree and every file's source code, ready to share with an AI or archive.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper/releases" target="_blank" class="btn-primary">
+                        ↓ Download .vsix
+                    </a>
+                    <a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper" target="_blank" class="btn-secondary">
+                        <!-- GitHub icon -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-num">60+</span>
+                        <span class="stat-label">Languages</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num">2 MB</span>
+                        <span class="stat-label">Size limit</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num">Free</span>
+                        <span class="stat-label">Forever</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-num">0</span>
+                        <span class="stat-label">Dependencies at runtime</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="terminal">
+                    <div class="terminal-bar">
+                        <div class="t-dots">
+                            <div class="t-dot red"></div>
+                            <div class="t-dot yellow"></div>
+                            <div class="t-dot green"></div>
+                        </div>
+                        <div class="t-title">tree-mapper — output preview</div>
+                    </div>
+                    <div class="terminal-body" id="terminalBody"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+        <div class="section-label">What it does</div>
+        <h2 class="section-title reveal">Everything you need.<br>Nothing you don't.</h2>
+        <p class="section-sub reveal reveal-delay-1">Built for developers who want to give AI assistants or teammates full context about a project — fast.</p>
+
+        <div class="features-grid">
+            <div class="feature-card reveal reveal-delay-1">
+                <div class="feature-icon">📁</div>
+                <div class="feature-title">Full directory tree</div>
+                <div class="feature-desc">CLI-style <code style="color:var(--green);font-size:11px">├──</code> / <code style="color:var(--green);font-size:11px">└──</code> hierarchy. Directories rendered before files at every level.</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-2">
+                <div class="feature-icon">📄</div>
+                <div class="feature-title">Language-aware code blocks</div>
+                <div class="feature-desc">60+ file types detected automatically. Every file wrapped in a properly fenced Markdown code block.</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-3">
+                <div class="feature-icon">🖱️</div>
+                <div class="feature-title">Right-click any folder</div>
+                <div class="feature-desc">Snapshot any subfolder, not just the root. Works from the Explorer context menu in one click.</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-1">
+                <div class="feature-icon">🚫</div>
+                <div class="feature-title">Smart ignore rules</div>
+                <div class="feature-desc"><code style="color:var(--amber);font-size:11px">.treeignore</code> uses gitignore syntax. Auto-created on first run. Plus hardcoded exclusions for <code style="color:var(--muted);font-size:11px">node_modules</code>, <code style="color:var(--muted);font-size:11px">.git</code>, and more.</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-2">
+                <div class="feature-icon">🕐</div>
+                <div class="feature-title">Local timestamps</div>
+                <div class="feature-desc">Snapshot header shows your device's local time with timezone offset — e.g. <code style="color:var(--blue);font-size:11px">UTC+6</code> or <code style="color:var(--blue);font-size:11px">UTC+5:30</code>.</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-3">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Safe by default</div>
+                <div class="feature-desc">Binary files detected by null-byte scan and skipped. Files over the size limit are excluded with a notice.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <div class="how-section" id="how">
+        <div class="how-inner">
+            <div class="section-label">How it works</div>
+            <h2 class="section-title reveal">Three steps. Done.</h2>
+            <p class="section-sub reveal reveal-delay-1">No configuration needed to get started. Just install and right-click.</p>
+
+            <div class="steps">
+                <div class="step reveal reveal-delay-1">
+                    <div class="step-num">1</div>
+                    <div class="step-title">Install the extension</div>
+                    <div class="step-desc">Download the <code style="color:var(--green);font-size:11px">.vsix</code> from GitHub Releases and install it in VS Code via <em>Extensions → Install from VSIX…</em></div>
+                </div>
+                <div class="step reveal reveal-delay-2">
+                    <div class="step-num">2</div>
+                    <div class="step-title">Right-click a folder</div>
+                    <div class="step-desc">In the Explorer panel, right-click any folder and select <strong>Tree Mapper: Generate Snapshot</strong>. A progress notification appears.</div>
+                </div>
+                <div class="step reveal reveal-delay-3">
+                    <div class="step-num">3</div>
+                    <div class="step-title">Get your snapshot</div>
+                    <div class="step-desc">A Markdown file is saved to <code style="color:var(--amber);font-size:11px">.tree/yyyy-mm-dd-hh-mm-ss.md</code>. Click <strong>Open File</strong> in the notification to view it instantly.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OUTPUT PREVIEW -->
+    <section class="preview-section">
+        <div class="section-label">Output format</div>
+        <h2 class="section-title reveal">One file.<br>Complete context.</h2>
+        <p class="section-sub reveal reveal-delay-1">The generated Markdown is structured, readable, and ready to paste directly into any AI assistant or documentation tool.</p>
+
+        <div class="preview-wrap">
+            <div class="preview-text">
+                <div class="item reveal reveal-delay-1">
+                    <div class="item-icon">📋</div>
+                    <div>
+                        <div class="item-title">Metadata header</div>
+                        <div class="item-desc">Timestamp, file count, and the size limit used — so every snapshot is self-documenting.</div>
+                    </div>
+                </div>
+                <div class="item reveal reveal-delay-2">
+                    <div class="item-icon">🌲</div>
+                    <div>
+                        <div class="item-title">Project tree</div>
+                        <div class="item-desc">Full directory hierarchy rendered in a code block — paste it anywhere and it just works.</div>
+                    </div>
+                </div>
+                <div class="item reveal reveal-delay-3">
+                    <div class="item-icon">📝</div>
+                    <div>
+                        <div class="item-title">File contents</div>
+                        <div class="item-desc">Every file follows with its full source in a language-tagged fenced code block for syntax highlighting.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-code reveal reveal-delay-2">
+                <div class="preview-code-bar">
+                    <span class="file-pill">.md</span>
+                    .tree/2026-04-11-14-35-22.md
+                </div>
+                <pre><span class="code-h1"># Workspace Snapshot: `my-project`</span>
+
+<span class="code-meta">&gt; **Generated:** 2026 04 11 02:35:22 PM UTC+6</span>
+<span class="code-meta">&gt; **Files included:** 12</span>
+<span class="code-meta">&gt; **Max file size:** 2048 KB</span>
+
+---
+
+<span class="code-h2">## Project Tree</span>
+
+<span class="code-fence">```</span>
+my-project/
+<span class="code-tree-sym">├── </span><span class="code-tree-dir">src/</span>
+<span class="code-tree-sym">│   ├── </span><span class="code-tree-file-js">extension.js</span>
+<span class="code-tree-sym">│   └── </span><span class="code-tree-file-js">scanner.js</span>
+<span class="code-tree-sym">├── </span><span class="code-tree-file-md">README.md</span>
+<span class="code-tree-sym">└── </span><span class="code-tree-file-js">package.json</span>
+<span class="code-fence">```</span>
+
+<span class="code-h2">## File Contents</span>
+
+<span class="code-h3">### `src/extension.js`</span>
+
+<span class="code-fence">```javascript</span>
+<span class="code-content">'use strict';
+const vscode = require('vscode');
+// ...</span>
+<span class="code-fence">```</span></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTALL -->
+    <div class="install-section" id="install">
+        <div class="install-inner">
+            <div class="section-label">Installation</div>
+            <h2 class="section-title reveal">Up and running<br>in 30 seconds.</h2>
+
+            <div class="install-tabs" id="installTabs">
+                <button class="tab-btn active" onclick="switchTab('vsix')">Install from VSIX</button>
+                <button class="tab-btn" onclick="switchTab('terminal')">Via Terminal</button>
+                <button class="tab-btn" onclick="switchTab('update')">Updating</button>
+            </div>
+
+            <div class="tab-content active" id="tab-vsix">
+                <div class="install-step">
+                    <div class="install-num">1</div>
+                    <div class="install-text">Go to the <strong><a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper/releases" style="color:var(--green)">GitHub Releases page</a></strong> and download the latest <code style="color:var(--amber);font-size:12px">tree-mapper-x.x.x.vsix</code> file.</div>
+                </div>
+                <div class="install-step">
+                    <div class="install-num">2</div>
+                    <div class="install-text">Open the <strong>Extensions panel</strong> in VS Code (<code style="color:var(--blue);font-size:12px">Ctrl+Shift+X</code>), click the <strong>⋯ menu</strong> at the top-right, and select <strong>Install from VSIX…</strong></div>
+                </div>
+                <div class="install-step">
+                    <div class="install-num">3</div>
+                    <div class="install-text">Browse to the downloaded file, select it, and <strong>reload VS Code</strong> when prompted.</div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-terminal">
+                <div class="install-step">
+                    <div class="install-num">1</div>
+                    <div class="install-text">Download the <code style="color:var(--amber);font-size:12px">.vsix</code> file from GitHub Releases, then run:</div>
+                </div>
+                <div class="code-block">
+                    <span id="termCmd">code --install-extension tree-mapper-1.0.0.vsix</span>
+                    <button class="copy-btn" onclick="copyCmd('termCmd', this)">copy</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-update">
+                <div class="install-step">
+                    <div class="install-num">1</div>
+                    <div class="install-text">Download the new <code style="color:var(--amber);font-size:12px">.vsix</code> from the latest release.</div>
+                </div>
+                <div class="install-step">
+                    <div class="install-num">2</div>
+                    <div class="install-text">Installing a newer version over the current one automatically replaces it — no need to uninstall first. Just repeat the install steps.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <section class="settings-section" id="settings">
+        <div class="section-label">Configuration</div>
+        <h2 class="section-title reveal">Settings</h2>
+        <p class="section-sub reveal reveal-delay-1">Open VS Code Settings (<code style="color:var(--blue);font-size:13px">Ctrl+,</code>) and search for <strong>Tree Mapper</strong> to configure these options.</p>
+
+        <table class="settings-table reveal">
+            <thead>
+                <tr>
+                    <th>Setting</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>treemapper.additionalIgnorePatterns</td>
+                    <td>[]</td>
+                    <td>Extra glob patterns to exclude, in addition to <code style="color:var(--green);font-size:11px">.treeignore</code>. Useful for project-agnostic ignores like <code style="color:var(--muted);font-size:11px">*.lock</code>.</td>
+                </tr>
+                <tr>
+                    <td>treemapper.maxFileSizeKB</td>
+                    <td>2048</td>
+                    <td>Files larger than this value (in KB) are skipped. Default is 2 MB. Lower it to speed up snapshots on large projects.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-glow"></div>
+        <h2 class="reveal">Ready to snapshot<br><span style="color:var(--green)">your workspace?</span></h2>
+        <p class="reveal reveal-delay-1">Free, open-source, and takes 30 seconds to install. No Marketplace account needed.</p>
+        <div class="cta-actions reveal reveal-delay-2">
+            <a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper/releases" target="_blank" class="btn-primary">↓ Download .vsix</a>
+            <a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper" target="_blank" class="btn-secondary">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                </svg>
+                View on GitHub
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">
+            <div class="footer-logo">
+                <img src="icon.png" alt="Tree Mapper">
+            </div>
+            Tree Mapper · MIT License · Built by MrDeveloperJIS
+        </div>
+        <ul class="footer-links">
+            <li><a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper">GitHub</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper/releases">Releases</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper/blob/main/README.md">Docs</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/vs_code-tree_mapper/issues">Issues</a></li>
+        </ul>
+    </footer>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

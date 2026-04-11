@@ -1,6 +1,0 @@
-node_modules/
-.tree/
-*.vsix
-*.log
-.treeignore
-guideline.md
