@@ -1,0 +1,12 @@
+# Tree Mapper Snapshots
+.tree/
+.treeignore
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+
+# Other Markdowns
+guideline.md
