@@ -85,6 +85,35 @@ function activate(context) {
           fs.writeFileSync(treeignorePath, defaultTreeignore, 'utf8');
         }
 
+        // ── 4c. Update .gitignore if this is a git repo ─────────────────────
+        const gitDir = path.join(rootPath, '.git');
+        if (fs.existsSync(gitDir) && fs.statSync(gitDir).isDirectory()) {
+          const gitignorePath = path.join(rootPath, '.gitignore');
+
+          let existing = '';
+          if (fs.existsSync(gitignorePath)) {
+            existing = fs.readFileSync(gitignorePath, 'utf8');
+          }
+
+          const existingLines = existing.split(/\r?\n/);
+          const hasTree = existingLines.includes('.tree/');
+          const hasTreeignore = existingLines.includes('.treeignore');
+
+          if (!hasTree && !hasTreeignore) {
+            // Neither exists — append full block with comment header
+            const separator = existing.length > 0 && !existing.endsWith('\n') ? '\n' : '';
+            fs.writeFileSync(gitignorePath, existing + separator + '# Tree Mapper Snapshots\n.tree/\n.treeignore\n', 'utf8');
+          } else if (!hasTree) {
+            // Only .treeignore exists — insert .tree/ right before it, no header
+            const updated = existing.replace(/^\.treeignore$/m, '.tree/\n.treeignore');
+            fs.writeFileSync(gitignorePath, updated, 'utf8');
+          } else if (!hasTreeignore) {
+            // Only .tree/ exists — insert .treeignore right after it, no header
+            const updated = existing.replace(/^\.tree\/$/m, '.tree/\n.treeignore');
+            fs.writeFileSync(gitignorePath, updated, 'utf8');
+          }
+        }
+
         const timestamp = getTimestamp();
         outFile = path.join(outDir, `${timestamp}.md`);
 

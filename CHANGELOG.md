@@ -4,7 +4,18 @@ All notable changes to Tree Mapper are documented here.
 
 ---
 
-## [1.0.0] — Initial Release
+## v1.1.1 — 2026-04-11
+
+### Added
+- Auto-updates `.gitignore` on snapshot generation if a `.git` folder is detected in the target root
+- Creates `.gitignore` if it doesn't exist yet (but `.git` folder is present)
+- Appends `.tree/` and `.treeignore` entries independently — only adds whichever are missing, no duplicates
+- Uses exact line matching to avoid false positives from substrings (e.g. `.treeignore-backup`)
+- Entries are written under a `# Tree Mapper Snapshots` comment block
+
+---
+
+## v1.0.0 — Initial Release
 
 ### Added
 - Generate a full Markdown snapshot of any folder via the Explorer right-click context menu
