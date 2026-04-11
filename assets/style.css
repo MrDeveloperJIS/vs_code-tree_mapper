@@ -158,6 +158,19 @@ nav {
     transition: all .3s;
 }
 
+.nav-hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.nav-hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
 /* ══════════════════════════════════
    HERO
 ══════════════════════════════════ */
@@ -383,7 +396,7 @@ nav {
     font-family: var(--mono);
     font-size: 12.5px;
     line-height: 1.8;
-    min-height: 360px;
+    min-height: 345px;
 }
 
 .t-line {

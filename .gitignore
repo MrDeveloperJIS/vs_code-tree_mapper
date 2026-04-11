@@ -4,9 +4,3 @@
 
 # Dependencies
 node_modules/
-
-# Logs
-*.log
-
-# Other Markdowns
-guideline.md

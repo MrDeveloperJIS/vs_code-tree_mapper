@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /assets/
 Crawl-Delay: 20
-Sitemap: https://mrdeveloperjis.github.io/vs_code-tree_mapper/sitemap.xml
+Sitemap: https://mrdeveloperjis.github.io/tree-mapper/sitemap.xml

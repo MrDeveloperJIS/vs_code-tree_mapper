@@ -7,7 +7,7 @@
     
     <!-- Main page of the website -->
     <url>
-        <loc>https://mrdeveloperjis.github.io/vs_code-tree_mapper/</loc>
+        <loc>https://mrdeveloperjis.github.io/tree-mapper/</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>

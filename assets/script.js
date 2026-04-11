@@ -1,12 +1,16 @@
 /* ── Nav toggle ── */
 function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('open');
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    hamburger.classList.toggle('open');
 }
 
 // Close nav when a link is clicked (mobile)
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         document.getElementById('navLinks').classList.remove('open');
+        document.getElementById('hamburger').classList.remove('open');
     });
 });
 
