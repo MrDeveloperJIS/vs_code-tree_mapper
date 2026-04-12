@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /assets/
+Disallow: README.md
 Crawl-Delay: 20
 Sitemap: https://mrdeveloperjis.github.io/tree-mapper/sitemap.xml

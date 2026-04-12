@@ -4,17 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Tree Mapper — VS Code Extension</title>
 
-    <!-- Favicon & site icon from icon.png -->
     <link rel="icon" type="image/png" href="assets/icon.png">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
@@ -33,11 +31,13 @@
             <li><a href="#how">How it works</a></li>
             <li><a href="#install">Install</a></li>
             <li><a href="#settings">Settings</a></li>
-            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" class="nav-cta" target="_blank">Download</a></li>
+            <li>
+                <a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" class="nav-cta" target="_blank" rel="noopener" data-download-btn>Download</a>
+            </li>
         </ul>
-        <div class="nav-hamburger" id="hamburger" onclick="toggleNav()">
+        <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation">
             <span></span><span></span><span></span>
-        </div>
+        </button>
     </nav>
 
     <!-- HERO -->
@@ -47,6 +47,7 @@
                 <div class="hero-badge">
                     <span class="dot"></span>
                     VS Code Extension
+                    <span data-version></span>
                 </div>
                 <h1>
                     Map your<br>
@@ -57,14 +58,11 @@
                     Right-click any folder. Get a complete Markdown snapshot — full directory tree and every file's source code, ready to share with an AI or archive.
                 </p>
                 <div class="hero-actions">
-                    <a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" target="_blank" class="btn-primary">
+                    <a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" target="_blank" rel="noopener" class="btn-primary" data-download-btn>
                         ↓ Download .vsix
                     </a>
-                    <a href="https://github.com/MrDeveloperJIS/tree-mapper" target="_blank" class="btn-secondary">
-                        <!-- GitHub icon -->
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                        </svg>
+                    <a href="https://github.com/MrDeveloperJIS/tree-mapper" target="_blank" rel="noopener" class="btn-secondary">
+                        <img src="assets/icons/github.svg" alt="GitHub" class="icon-svg" style="width:16px;height:16px;">
                         GitHub
                     </a>
                 </div>
@@ -206,7 +204,7 @@
 
 <span class="code-meta">&gt; **Generated:** 2026 04 11 02:35:22 PM UTC+6</span>
 <span class="code-meta">&gt; **Files included:** 12</span>
-<span class="code-meta">&gt; **Max file size:** 2048 KB</span>
+<span class="code-meta">&gt; **Repo size:** 2048 KB</span>
 
 ---
 
@@ -241,15 +239,15 @@ const vscode = require('vscode');
             <h2 class="section-title reveal">Up and running<br>in 30 seconds.</h2>
 
             <div class="install-tabs" id="installTabs">
-                <button class="tab-btn active" onclick="switchTab('vsix')">Install from VSIX</button>
-                <button class="tab-btn" onclick="switchTab('terminal')">Via Terminal</button>
-                <button class="tab-btn" onclick="switchTab('update')">Updating</button>
+                <button class="tab-btn active" data-tab="vsix">Install from VSIX</button>
+                <button class="tab-btn" data-tab="terminal">Via Terminal</button>
+                <button class="tab-btn" data-tab="update">Updating</button>
             </div>
 
             <div class="tab-content active" id="tab-vsix">
                 <div class="install-step">
                     <div class="install-num">1</div>
-                    <div class="install-text">Go to the <strong><a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" style="color:var(--green)">GitHub Releases page</a></strong> and download the latest <code style="color:var(--amber);font-size:12px">tree-mapper-x.x.x.vsix</code> file.</div>
+                    <div class="install-text">Go to the <strong><a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" style="color:var(--green)" data-download-btn>GitHub Releases page</a></strong> and download the latest <code style="color:var(--amber);font-size:12px" data-vsix-name>tree-mapper-x.x.x.vsix</code> file.</div>
                 </div>
                 <div class="install-step">
                     <div class="install-num">2</div>
@@ -264,22 +262,21 @@ const vscode = require('vscode');
             <div class="tab-content" id="tab-terminal">
                 <div class="install-step">
                     <div class="install-num">1</div>
-                    <div class="install-text">Download the <code style="color:var(--amber);font-size:12px">.vsix</code> file from GitHub Releases.</div>
+                    <div class="install-text">Go to the <strong><a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" style="color:var(--green)" data-download-btn>GitHub Releases page</a></strong> and download the latest <code style="color:var(--amber);font-size:12px" data-vsix-name>tree-mapper-x.x.x.vsix</code> file.</div>
                 </div>
                 <div class="install-step">
                     <div class="install-num">2</div>
-                    <div class="install-text">Run in terminal:</div>
+                    <div class="install-text">Run in <strong>terminal</strong>:</div>
                 </div>
                 <div class="code-block">
-                    <span id="termCmd">code --install-extension tree-mapper-1.0.0.vsix</span>
-                    <button class="copy-btn" onclick="copyCmd('termCmd', this)">copy</button>
+                    <span id="termCmd">code --install-extension tree-mapper-x.x.x.vsix</span>
                 </div>
             </div>
 
             <div class="tab-content" id="tab-update">
                 <div class="install-step">
                     <div class="install-num">1</div>
-                    <div class="install-text">Download the new <code style="color:var(--amber);font-size:12px">.vsix</code> from the latest release.</div>
+                    <div class="install-text">Go to the <strong><a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" style="color:var(--green)" data-download-btn>GitHub Releases page</a></strong> and download the latest <code style="color:var(--amber);font-size:12px" data-vsix-name>tree-mapper-x.x.x.vsix</code> file.</div>
                 </div>
                 <div class="install-step">
                     <div class="install-num">2</div>
@@ -324,11 +321,9 @@ const vscode = require('vscode');
         <h2 class="reveal">Ready to snapshot<br><span style="color:var(--green)">your workspace?</span></h2>
         <p class="reveal reveal-delay-1">Free, open-source, and takes 30 seconds to install. No Marketplace account needed.</p>
         <div class="cta-actions reveal reveal-delay-2">
-            <a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" target="_blank" class="btn-primary">↓ Download .vsix</a>
-            <a href="https://github.com/MrDeveloperJIS/tree-mapper" target="_blank" class="btn-secondary">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                </svg>
+            <a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" target="_blank" rel="noopener" class="btn-primary" data-download-btn>↓ Download .vsix</a>
+            <a href="https://github.com/MrDeveloperJIS/tree-mapper" target="_blank" rel="noopener" class="btn-secondary">
+                <img src="assets/icons/github.svg" alt="GitHub" class="icon-svg" style="width:16px;height:16px;">
                 View on GitHub
             </a>
         </div>
@@ -343,15 +338,15 @@ const vscode = require('vscode');
             Tree Mapper · MIT License · Built by MrDeveloperJIS
         </div>
         <ul class="footer-links">
-            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper">GitHub</a></li>
-            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper/releases">Releases</a></li>
-            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper/blob/main/README.md">Docs</a></li>
-            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper/issues">Issues</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper" target="_blank">GitHub</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper/releases" target="_blank">Releases</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper/blob/main/README.md" target="_blank">Docs</a></li>
+            <li><a href="https://github.com/MrDeveloperJIS/tree-mapper/issues" target="_blank">Issues</a></li>
         </ul>
     </footer>
 
-    <!-- Script -->
     <script src="assets/script.js"></script>
+
 </body>
 
 </html>

@@ -1,3 +1,13 @@
+@media (prefers-color-scheme: dark),
+(prefers-color-scheme: light) {
+
+    :root,
+    body,
+    * {
+        color-scheme: only light;
+    }
+}
+
 *,
 *::before,
 *::after {
@@ -22,6 +32,7 @@
     --sans: 'Syne', sans-serif;
     --radius: 12px;
     --glow: 0 0 40px rgba(74, 250, 138, 0.12);
+    --nav-transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
@@ -36,7 +47,23 @@ body {
     overflow-x: hidden;
 }
 
-/* ── Noise overlay ── */
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--muted);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--green-dim);
+    border-radius: 2px;
+}
+
+/* Subtle noise texture overlay */
 body::before {
     content: '';
     position: fixed;
@@ -47,7 +74,7 @@ body::before {
     opacity: .5;
 }
 
-/* ── Grid bg ── */
+/* Faint grid background */
 body::after {
     content: '';
     position: fixed;
@@ -60,6 +87,7 @@ body::after {
     z-index: 0;
 }
 
+/* Ensure content sits above pseudo-element backgrounds */
 section,
 nav,
 footer,
@@ -82,7 +110,9 @@ nav {
     z-index: 100;
     background: rgba(13, 15, 18, 0.85);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
+    width: 100%;
 }
 
 .nav-logo {
@@ -93,6 +123,11 @@ nav {
     font-size: 14px;
     color: var(--green);
     text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.nav-logo:hover {
+    opacity: 0.8;
 }
 
 .nav-logo .logo-icon {
@@ -134,11 +169,12 @@ nav {
     padding: 8px 18px;
     border-radius: 6px;
     font-weight: 700 !important;
-    transition: opacity .2s !important;
+    transition: opacity .2s, transform .2s !important;
 }
 
 .nav-cta:hover {
     opacity: .85;
+    transform: translateY(-1px);
 }
 
 .nav-hamburger {
@@ -147,6 +183,8 @@ nav {
     gap: 5px;
     cursor: pointer;
     padding: 4px;
+    background: none;
+    border: none;
 }
 
 .nav-hamburger span {
@@ -155,9 +193,12 @@ nav {
     height: 2px;
     background: var(--text);
     border-radius: 2px;
-    transition: all .3s;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.25s ease,
+        background 0.2s;
 }
 
+/* Animate hamburger bars into an × when open */
 .nav-hamburger.open span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
 }
@@ -271,13 +312,18 @@ nav {
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
-    transition: transform .2s, box-shadow .2s;
+    transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
     box-shadow: 0 0 0 0 rgba(74, 250, 138, 0.4);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(74, 250, 138, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(74, 250, 138, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(74, 250, 138, 0.2);
 }
 
 .btn-secondary {
@@ -292,15 +338,21 @@ nav {
     font-family: var(--mono);
     font-size: 13px;
     text-decoration: none;
-    transition: border-color .2s, background .2s;
+    transition: border-color .2s, background .2s, transform .25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .btn-secondary:hover {
     border-color: rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
 }
 
-.btn-secondary svg {
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary svg,
+.btn-secondary img.icon-svg {
     width: 16px;
     height: 16px;
     fill: currentColor;
@@ -336,7 +388,7 @@ nav {
     letter-spacing: .08em;
 }
 
-/* ── Hero right: terminal preview ── */
+/* Terminal preview card */
 .hero-right {
     flex: 1;
     max-width: 520px;
@@ -391,12 +443,13 @@ nav {
     text-align: center;
 }
 
+/* em-based min-height so it scales proportionally on small screens */
 .terminal-body {
     padding: 20px;
     font-family: var(--mono);
     font-size: 12.5px;
     line-height: 1.8;
-    min-height: 345px;
+    min-height: 26em;
 }
 
 .t-line {
@@ -446,7 +499,7 @@ nav {
     color: #94a3b8;
 }
 
-.t-out .success {
+.t-out.success {
     color: var(--green);
 }
 
@@ -519,7 +572,7 @@ nav {
 .feature-card {
     background: var(--bg2);
     padding: 32px;
-    transition: background .2s;
+    transition: background .25s ease, transform .25s ease;
     position: relative;
     overflow: hidden;
 }
@@ -555,6 +608,11 @@ nav {
     justify-content: center;
     font-size: 18px;
     margin-bottom: 20px;
+    transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
 }
 
 .feature-title {
@@ -593,6 +651,7 @@ nav {
     position: relative;
 }
 
+/* Dashed connector line between step numbers */
 .steps::before {
     content: '';
     position: absolute;
@@ -624,12 +683,13 @@ nav {
     margin: 0 auto 24px;
     position: relative;
     z-index: 1;
-    transition: border-color .3s, box-shadow .3s;
+    transition: border-color .3s, box-shadow .3s, transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .step:hover .step-num {
     border-color: var(--green);
     box-shadow: 0 0 20px rgba(74, 250, 138, 0.2);
+    transform: scale(1.08);
 }
 
 .step-title {
@@ -679,6 +739,11 @@ nav {
     justify-content: center;
     font-size: 16px;
     margin-top: 2px;
+    transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.preview-text .item:hover .item-icon {
+    transform: scale(1.12);
 }
 
 .preview-text .item-title {
@@ -699,6 +764,12 @@ nav {
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+    transition: box-shadow .3s, transform .3s;
+}
+
+.preview-code:hover {
+    box-shadow: 0 28px 80px rgba(0, 0, 0, .5), var(--glow);
+    transform: translateY(-2px);
 }
 
 .preview-code-bar {
@@ -824,10 +895,23 @@ nav {
     border-top: none;
     border-radius: 0 0 var(--radius) var(--radius);
     padding: 28px;
+    animation: fadeSlideIn 0.25s ease forwards;
 }
 
 .tab-content.active {
     display: block;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .install-step {
@@ -880,6 +964,11 @@ nav {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    transition: border-color .2s;
+}
+
+.code-block:hover {
+    border-color: rgba(74, 250, 138, 0.2);
 }
 
 .copy-btn {
@@ -892,12 +981,13 @@ nav {
     padding: 4px 10px;
     cursor: pointer;
     white-space: nowrap;
-    transition: color .2s, border-color .2s;
+    transition: color .2s, border-color .2s, background .2s;
 }
 
 .copy-btn:hover {
     color: var(--green);
     border-color: var(--green-dim);
+    background: rgba(74, 250, 138, 0.05);
 }
 
 .copy-btn.copied {
@@ -943,6 +1033,11 @@ nav {
     background: var(--bg2);
     vertical-align: top;
     line-height: 1.6;
+    transition: background .2s;
+}
+
+.settings-table tr:hover td {
+    background: var(--bg3);
 }
 
 .settings-table tr:last-child td {
@@ -964,6 +1059,7 @@ nav {
 
 .settings-table td:last-child {
     color: var(--muted);
+    min-width: 360px;
 }
 
 /* ══════════════════════════════════
@@ -1068,7 +1164,8 @@ footer {
     color: var(--green);
 }
 
-.footer-links svg {
+.footer-links svg,
+.footer-links img.icon-svg {
     width: 13px;
     height: 13px;
     fill: currentColor;
@@ -1116,27 +1213,86 @@ footer {
         padding: 16px 24px;
     }
 
+    /* Mobile nav slides down from the sticky bar */
     .nav-links {
-        display: none;
+        display: flex;
         flex-direction: column;
         gap: 0;
-    }
-
-    .nav-links.open {
-        display: flex;
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
-        background: rgba(13, 15, 18, .97);
+        background: rgba(13, 15, 18, 0.97);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border);
-        padding: 12px 0;
+        padding: 0;
         z-index: 99;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition:
+            max-height var(--nav-transition),
+            opacity var(--nav-transition),
+            transform var(--nav-transition),
+            padding var(--nav-transition);
     }
 
+    .nav-links.open {
+        max-height: 400px;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        padding: 8px 0 16px;
+    }
+
+    .nav-links.closing {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        padding: 0;
+    }
+
+    /* Staggered slide-in for each link when nav opens */
     .nav-links li a {
         display: block;
         padding: 12px 24px;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease, color 0.2s;
+    }
+
+    .nav-links.open li:nth-child(1) a {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.05s;
+    }
+
+    .nav-links.open li:nth-child(2) a {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.10s;
+    }
+
+    .nav-links.open li:nth-child(3) a {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.15s;
+    }
+
+    .nav-links.open li:nth-child(4) a {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.20s;
+    }
+
+    .nav-links.open li:nth-child(5) a {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.25s;
     }
 
     .nav-hamburger {
