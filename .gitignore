@@ -2,4 +2,3 @@ node_modules/
 *.vsix
 *.log
 .tree/
-.treeignore

@@ -6,7 +6,6 @@
 
 # Generated output — exclude from package
 .tree/**
-.treeignore
 
 # Dev tooling
 .vscode/**
