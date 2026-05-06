@@ -2,7 +2,7 @@
   "name": "tree-mapper",
   "displayName": "Tree Mapper",
   "description": "Generate a complete Markdown snapshot of any folder in your VS Code workspace — including a full directory tree and every file's source code.",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "publisher": "MrDeveloperJIS",
   "engines": {
     "vscode": "^1.85.0"

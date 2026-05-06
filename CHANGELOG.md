@@ -4,6 +4,14 @@ All notable changes to Tree Mapper are documented here.
 
 ---
 
+## v2.2.1 — 2026-05-06
+
+### Fixed
+
+- **"Open File" button now works reliably** — The success notification was previously wrapped in a `withProgress` call, causing the button click to be ignored if the progress timer resolved first. The notification is now a plain promise with a 3-second auto-dismiss timeout, so clicking "Open File" correctly opens the snapshot in the editor.
+
+---
+
 ## v2.2.0 — 2026-04-29
 
 ### Changed

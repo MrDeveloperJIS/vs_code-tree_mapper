@@ -191,31 +191,12 @@ function activate(context) {
     // ── Auto-dismissing "Open File" notification (3 s) ──────────────────────
     const timestamp = path.basename(outFile, '.md');
 
-    let openFile = false;
-
-    await vscode.window.withProgress(
-      {
-        location: vscode.ProgressLocation.Notification,
-        cancellable: false,
-      },
-      (_progress, token) =>
-        new Promise((resolve) => {
-          const timer = setTimeout(resolve, 1000);
-
-          vscode.window
-            .showInformationMessage(
-              `Tree Mapper: Snapshot saved → .tree/${timestamp}.md`,
-              'Open File'
-            )
-            .then((value) => {
-              clearTimeout(timer);
-              openFile = value === 'Open File';
-              resolve();
-            });
-        })
+    const choice = await vscode.window.showInformationMessage(
+      `Tree Mapper: Snapshot saved → .tree/${timestamp}.md`,
+      'Open File'
     );
 
-    if (openFile) {
+    if (choice === 'Open File') {
       const doc = await vscode.workspace.openTextDocument(outFile);
       await vscode.window.showTextDocument(doc);
     }
